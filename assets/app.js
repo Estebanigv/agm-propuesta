@@ -3,7 +3,8 @@
 'use strict';
 var WA='56977699321', MAIL='ventas@agm.cl', KEY='agm_cotizacion_v1';
 var R = document.documentElement.getAttribute('data-root') || '';
-var IR = R + (document.documentElement.getAttribute('data-img') || '../'); // prefijo de imágenes
+var _im = document.documentElement.getAttribute('data-img');
+var IR = R + (_im === null ? '../' : _im); // prefijo de imágenes (vacío en el sitio publicado)
 var $=function(s,c){return (c||document).querySelector(s)}, $$=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
 window.AGM = window.AGM || {};
 
