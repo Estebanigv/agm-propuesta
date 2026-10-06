@@ -143,7 +143,7 @@ function valida(form){
 }
 function mensaje(d){
   var L=['*Solicitud de cotización — AGM Chile*'];
-  var map={empresa:'Empresa',rut:'RUT',nombre:'Contacto',email:'Email',telefono:'Teléfono',rubro:'Rubro',plazo:'Plazo',comuna:'Comuna/Región',mensaje:'Detalle'};
+  var map={empresa:'Empresa',rut:'RUT',nombre:'Contacto',email:'Email',telefono:'Teléfono',rubro:'Necesita equipar',cantidad:'Cantidad aproximada',plazo:'Plazo',comuna:'Comuna/Región',mensaje:'Detalle'};
   Object.keys(map).forEach(function(k){ if(d[k]) L.push(map[k]+': '+d[k]); });
   var r=resumen(); if(r) L.push('','*Productos:*',r);
   if(!r && d.producto) L.push('','Producto: '+d.producto);
@@ -264,6 +264,17 @@ if(gal){
     });
   });
 }
+
+/* ---------- preselección de industria en el cotizador ---------- */
+$$('[data-rubro-pick]').forEach(function(a){
+  a.addEventListener('click',function(){
+    var sel=$('#rubro'); if(!sel) return;
+    var val=a.getAttribute('data-rubro-pick');
+    Array.prototype.forEach.call(sel.options,function(o){ if(o.text.trim()===val.trim()) sel.value=o.value||o.text; });
+    sel.closest('.field').classList.remove('field--error');
+    setTimeout(function(){ var f=$('#empresa'); if(f) f.focus({preventScroll:true}); },700);
+  });
+});
 
 /* ---------- chips por rubro (B2B) ---------- */
 $$('[data-chips]').forEach(function(box){
